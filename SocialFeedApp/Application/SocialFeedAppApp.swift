@@ -11,7 +11,7 @@ import SwiftUI
 struct SocialFeedAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            VideoFeedView()
         }
     }
 }

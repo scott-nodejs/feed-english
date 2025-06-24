@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  VideosFeedView.swift
 //  SocialFeedApp
 //
 //  Created by Usman on 24.06.25.
@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct VideoFeedView: View {
+    @State var viewModel = VideoFeedViewModel()
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -20,5 +22,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    VideoFeedView()
 }

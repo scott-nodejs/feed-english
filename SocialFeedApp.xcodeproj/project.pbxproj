@@ -8,13 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		9657CF402E0B0DA6001F5E70 /* SocialFeedAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF3E2E0B0DA6001F5E70 /* SocialFeedAppApp.swift */; };
-		9657CF412E0B0DA6001F5E70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF3D2E0B0DA6001F5E70 /* ContentView.swift */; };
+		9657CF412E0B0DA6001F5E70 /* VideoFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF3D2E0B0DA6001F5E70 /* VideoFeedView.swift */; };
 		9657CF422E0B0DA6001F5E70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9657CF3A2E0B0DA6001F5E70 /* Preview Assets.xcassets */; };
 		9657CF432E0B0DA6001F5E70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9657CF3C2E0B0DA6001F5E70 /* Assets.xcassets */; };
 		9657CF442E0B0DA6001F5E70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9657CF3A2E0B0DA6001F5E70 /* Preview Assets.xcassets */; };
 		9657CF452E0B0DA6001F5E70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9657CF3C2E0B0DA6001F5E70 /* Assets.xcassets */; };
 		9657CF462E0B0DA6001F5E70 /* SocialFeedAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF3E2E0B0DA6001F5E70 /* SocialFeedAppApp.swift */; };
-		9657CF472E0B0DA6001F5E70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF3D2E0B0DA6001F5E70 /* ContentView.swift */; };
+		9657CF472E0B0DA6001F5E70 /* VideoFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF3D2E0B0DA6001F5E70 /* VideoFeedView.swift */; };
+		9657CF522E0B0F22001F5E70 /* Namespaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF512E0B0F22001F5E70 /* Namespaces.swift */; };
+		9657CF532E0B0F22001F5E70 /* Namespaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF512E0B0F22001F5E70 /* Namespaces.swift */; };
+		9657CF552E0B1BCF001F5E70 /* API+Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF542E0B1BCF001F5E70 /* API+Videos.swift */; };
+		9657CF562E0B1BCF001F5E70 /* API+Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF542E0B1BCF001F5E70 /* API+Videos.swift */; };
+		9657CF582E0B1CCB001F5E70 /* VideoFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF572E0B1CCB001F5E70 /* VideoFeedViewModel.swift */; };
+		9657CF592E0B1CCB001F5E70 /* VideoFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF572E0B1CCB001F5E70 /* VideoFeedViewModel.swift */; };
+		9657CF5B2E0B1CE2001F5E70 /* VideoFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF5A2E0B1CE2001F5E70 /* VideoFeedUseCase.swift */; };
+		9657CF5C2E0B1CE2001F5E70 /* VideoFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF5A2E0B1CE2001F5E70 /* VideoFeedUseCase.swift */; };
+		9657CF5E2E0B1CF0001F5E70 /* VideoFeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF5D2E0B1CF0001F5E70 /* VideoFeedRepository.swift */; };
+		9657CF5F2E0B1CF0001F5E70 /* VideoFeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF5D2E0B1CF0001F5E70 /* VideoFeedRepository.swift */; };
+		9657CF612E0B1EF3001F5E70 /* videos.json in Resources */ = {isa = PBXBuildFile; fileRef = 9657CF602E0B1EF3001F5E70 /* videos.json */; };
+		9657CF622E0B1EF3001F5E70 /* videos.json in Resources */ = {isa = PBXBuildFile; fileRef = 9657CF602E0B1EF3001F5E70 /* videos.json */; };
+		9657CF652E0B543E001F5E70 /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF642E0B543E001F5E70 /* JSONReader.swift */; };
+		9657CF662E0B543E001F5E70 /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF642E0B543E001F5E70 /* JSONReader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +54,15 @@
 		9657CF1B2E0B0D4E001F5E70 /* SocialFeedAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocialFeedAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9657CF3A2E0B0DA6001F5E70 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9657CF3C2E0B0DA6001F5E70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9657CF3D2E0B0DA6001F5E70 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9657CF3D2E0B0DA6001F5E70 /* VideoFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedView.swift; sourceTree = "<group>"; };
 		9657CF3E2E0B0DA6001F5E70 /* SocialFeedAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialFeedAppApp.swift; sourceTree = "<group>"; };
+		9657CF512E0B0F22001F5E70 /* Namespaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Namespaces.swift; sourceTree = "<group>"; };
+		9657CF542E0B1BCF001F5E70 /* API+Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Videos.swift"; sourceTree = "<group>"; };
+		9657CF572E0B1CCB001F5E70 /* VideoFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedViewModel.swift; sourceTree = "<group>"; };
+		9657CF5A2E0B1CE2001F5E70 /* VideoFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedUseCase.swift; sourceTree = "<group>"; };
+		9657CF5D2E0B1CF0001F5E70 /* VideoFeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedRepository.swift; sourceTree = "<group>"; };
+		9657CF602E0B1EF3001F5E70 /* videos.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = videos.json; sourceTree = "<group>"; };
+		9657CF642E0B543E001F5E70 /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -113,12 +134,99 @@
 		9657CF3F2E0B0DA6001F5E70 /* SocialFeedApp */ = {
 			isa = PBXGroup;
 			children = (
+				9657CF4F2E0B0F0D001F5E70 /* Core */,
+				9657CF4A2E0B0E9F001F5E70 /* Resources */,
+				9657CF492E0B0E96001F5E70 /* Application */,
+				9657CF482E0B0E8C001F5E70 /* Features */,
 				9657CF3B2E0B0DA6001F5E70 /* Preview Content */,
-				9657CF3C2E0B0DA6001F5E70 /* Assets.xcassets */,
-				9657CF3D2E0B0DA6001F5E70 /* ContentView.swift */,
-				9657CF3E2E0B0DA6001F5E70 /* SocialFeedAppApp.swift */,
 			);
 			path = SocialFeedApp;
+			sourceTree = "<group>";
+		};
+		9657CF482E0B0E8C001F5E70 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF4B2E0B0EAF001F5E70 /* VideoFeed */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		9657CF492E0B0E96001F5E70 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF3E2E0B0DA6001F5E70 /* SocialFeedAppApp.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		9657CF4A2E0B0E9F001F5E70 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF3C2E0B0DA6001F5E70 /* Assets.xcassets */,
+				9657CF602E0B1EF3001F5E70 /* videos.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9657CF4B2E0B0EAF001F5E70 /* VideoFeed */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF4E2E0B0ECB001F5E70 /* Data */,
+				9657CF4D2E0B0EC5001F5E70 /* Domain */,
+				9657CF4C2E0B0EBE001F5E70 /* View */,
+			);
+			path = VideoFeed;
+			sourceTree = "<group>";
+		};
+		9657CF4C2E0B0EBE001F5E70 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF3D2E0B0DA6001F5E70 /* VideoFeedView.swift */,
+				9657CF572E0B1CCB001F5E70 /* VideoFeedViewModel.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9657CF4D2E0B0EC5001F5E70 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF5A2E0B1CE2001F5E70 /* VideoFeedUseCase.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		9657CF4E2E0B0ECB001F5E70 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF542E0B1BCF001F5E70 /* API+Videos.swift */,
+				9657CF5D2E0B1CF0001F5E70 /* VideoFeedRepository.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		9657CF4F2E0B0F0D001F5E70 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF632E0B542C001F5E70 /* JSONReader */,
+				9657CF502E0B0F16001F5E70 /* Namespaces */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		9657CF502E0B0F16001F5E70 /* Namespaces */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF512E0B0F22001F5E70 /* Namespaces.swift */,
+			);
+			path = Namespaces;
+			sourceTree = "<group>";
+		};
+		9657CF632E0B542C001F5E70 /* JSONReader */ = {
+			isa = PBXGroup;
+			children = (
+				9657CF642E0B543E001F5E70 /* JSONReader.swift */,
+			);
+			path = JSONReader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9657CF442E0B0DA6001F5E70 /* Preview Assets.xcassets in Resources */,
+				9657CF622E0B1EF3001F5E70 /* videos.json in Resources */,
 				9657CF452E0B0DA6001F5E70 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9657CF422E0B0DA6001F5E70 /* Preview Assets.xcassets in Resources */,
+				9657CF612E0B1EF3001F5E70 /* videos.json in Resources */,
 				9657CF432E0B0DA6001F5E70 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,8 +376,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9657CF662E0B543E001F5E70 /* JSONReader.swift in Sources */,
 				9657CF462E0B0DA6001F5E70 /* SocialFeedAppApp.swift in Sources */,
-				9657CF472E0B0DA6001F5E70 /* ContentView.swift in Sources */,
+				9657CF532E0B0F22001F5E70 /* Namespaces.swift in Sources */,
+				9657CF552E0B1BCF001F5E70 /* API+Videos.swift in Sources */,
+				9657CF5F2E0B1CF0001F5E70 /* VideoFeedRepository.swift in Sources */,
+				9657CF592E0B1CCB001F5E70 /* VideoFeedViewModel.swift in Sources */,
+				9657CF472E0B0DA6001F5E70 /* VideoFeedView.swift in Sources */,
+				9657CF5B2E0B1CE2001F5E70 /* VideoFeedUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,8 +391,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9657CF562E0B1BCF001F5E70 /* API+Videos.swift in Sources */,
+				9657CF652E0B543E001F5E70 /* JSONReader.swift in Sources */,
 				9657CF402E0B0DA6001F5E70 /* SocialFeedAppApp.swift in Sources */,
-				9657CF412E0B0DA6001F5E70 /* ContentView.swift in Sources */,
+				9657CF412E0B0DA6001F5E70 /* VideoFeedView.swift in Sources */,
+				9657CF5C2E0B1CE2001F5E70 /* VideoFeedUseCase.swift in Sources */,
+				9657CF582E0B1CCB001F5E70 /* VideoFeedViewModel.swift in Sources */,
+				9657CF522E0B0F22001F5E70 /* Namespaces.swift in Sources */,
+				9657CF5E2E0B1CF0001F5E70 /* VideoFeedRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
