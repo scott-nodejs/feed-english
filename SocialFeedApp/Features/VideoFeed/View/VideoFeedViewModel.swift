@@ -14,7 +14,15 @@ protocol VideoFeedViewModelType {
 
 @Observable
 final class VideoFeedViewModel {
-    private(set) var videos: [UI.Feed.Video] = []
+    enum ViewState {
+        case loading
+        case result(videos: [UI.Feed.Video])
+        case error(Error)
+        case empty
+        case idle
+    }
+    
+    private(set) var viewState: ViewState = .idle
     
     private let useCase: VideoFeedUseCaseType
     
@@ -26,16 +34,25 @@ final class VideoFeedViewModel {
 }
 
 extension VideoFeedViewModel: VideoFeedViewModelType {
-    
     @MainActor
     func fetchVideos() async {
+        // Set the initial state to loading
+        self.viewState = .loading
+        
         do {
+            // Fetch videos using the use case
             let videos = try await useCase.fetchVideos()
-            self.videos = videos.map { $0.normalize() }
-            print("Fetched \(videos.count) videos")
+            
+            // Normalize the videos to the UI model
+            let normalizedVideos = videos.map { $0.normalize() }
+                
+            // Update the view state with the fetched videos
+            self.viewState = normalizedVideos.isEmpty ? .empty : .result(videos: normalizedVideos)
         } catch {
-            print("Failed to fetch videos: \(error)")
             // Handle error appropriately, e.g., show an alert or log the error
+            viewState = .error(error)
+            
+            print("Failed to fetch videos: \(error)")
         }
     }
 }

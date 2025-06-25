@@ -11,13 +11,19 @@ import Foundation
 extension UI.Feed {
     struct Video: Identifiable {
         let id = UUID()
-        let creatorName: String
-        let creatorAvatarURL: String
+        let creator: Creator
         let shortVideoURL: String
         let fullVideoURL: String
         let description: String
         let likes: Int
         let comments: Int
+    }
+}
+
+extension UI.Feed.Video {
+    struct Creator {
+        let name: String
+        let avatarURL: String
     }
 }
 
@@ -27,13 +33,24 @@ extension Domain.Feed.Video: Normalizable {
      
     func normalize() -> Output {
         Output(
-            creatorName: creator.name,
-            creatorAvatarURL: creator.avatarURL,
+            creator: creator.normalize(),
             shortVideoURL: shortVideoURL,
             fullVideoURL: fullVideoURL,
             description: description,
             likes: likes,
             comments: comments
+        )
+    }
+}
+
+// Normalize Domain Video to UI Video
+extension Domain.Feed.Video.Creator: Normalizable {
+    typealias Output = UI.Feed.Video.Creator
+     
+    func normalize() -> Output {
+        Output(
+            name: name,
+            avatarURL: avatarURL
         )
     }
 }
