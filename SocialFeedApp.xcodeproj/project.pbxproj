@@ -29,6 +29,12 @@
 		9657CF622E0B1EF3001F5E70 /* videos.json in Resources */ = {isa = PBXBuildFile; fileRef = 9657CF602E0B1EF3001F5E70 /* videos.json */; };
 		9657CF652E0B543E001F5E70 /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF642E0B543E001F5E70 /* JSONReader.swift */; };
 		9657CF662E0B543E001F5E70 /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF642E0B543E001F5E70 /* JSONReader.swift */; };
+		9657CF752E0C126D001F5E70 /* UI+Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF742E0C126D001F5E70 /* UI+Videos.swift */; };
+		9657CF762E0C126D001F5E70 /* UI+Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF742E0C126D001F5E70 /* UI+Videos.swift */; };
+		9657CF782E0C1334001F5E70 /* Domain+Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF772E0C1334001F5E70 /* Domain+Videos.swift */; };
+		9657CF792E0C1334001F5E70 /* Domain+Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF772E0C1334001F5E70 /* Domain+Videos.swift */; };
+		9657CF7B2E0C1382001F5E70 /* Normalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF7A2E0C1382001F5E70 /* Normalizable.swift */; };
+		9657CF7C2E0C1382001F5E70 /* Normalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF7A2E0C1382001F5E70 /* Normalizable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +69,9 @@
 		9657CF5D2E0B1CF0001F5E70 /* VideoFeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedRepository.swift; sourceTree = "<group>"; };
 		9657CF602E0B1EF3001F5E70 /* videos.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = videos.json; sourceTree = "<group>"; };
 		9657CF642E0B543E001F5E70 /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
+		9657CF742E0C126D001F5E70 /* UI+Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI+Videos.swift"; sourceTree = "<group>"; };
+		9657CF772E0C1334001F5E70 /* Domain+Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Domain+Videos.swift"; sourceTree = "<group>"; };
+		9657CF7A2E0C1382001F5E70 /* Normalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Normalizable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -183,6 +192,7 @@
 			children = (
 				9657CF3D2E0B0DA6001F5E70 /* VideoFeedView.swift */,
 				9657CF572E0B1CCB001F5E70 /* VideoFeedViewModel.swift */,
+				9657CF742E0C126D001F5E70 /* UI+Videos.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -191,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				9657CF5A2E0B1CE2001F5E70 /* VideoFeedUseCase.swift */,
+				9657CF772E0C1334001F5E70 /* Domain+Videos.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -217,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				9657CF512E0B0F22001F5E70 /* Namespaces.swift */,
+				9657CF7A2E0C1382001F5E70 /* Normalizable.swift */,
 			);
 			path = Namespaces;
 			sourceTree = "<group>";
@@ -376,13 +388,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9657CF7C2E0C1382001F5E70 /* Normalizable.swift in Sources */,
 				9657CF662E0B543E001F5E70 /* JSONReader.swift in Sources */,
 				9657CF462E0B0DA6001F5E70 /* SocialFeedAppApp.swift in Sources */,
 				9657CF532E0B0F22001F5E70 /* Namespaces.swift in Sources */,
 				9657CF552E0B1BCF001F5E70 /* API+Videos.swift in Sources */,
 				9657CF5F2E0B1CF0001F5E70 /* VideoFeedRepository.swift in Sources */,
+				9657CF792E0C1334001F5E70 /* Domain+Videos.swift in Sources */,
 				9657CF592E0B1CCB001F5E70 /* VideoFeedViewModel.swift in Sources */,
 				9657CF472E0B0DA6001F5E70 /* VideoFeedView.swift in Sources */,
+				9657CF752E0C126D001F5E70 /* UI+Videos.swift in Sources */,
 				9657CF5B2E0B1CE2001F5E70 /* VideoFeedUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,9 +406,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9657CF782E0C1334001F5E70 /* Domain+Videos.swift in Sources */,
 				9657CF562E0B1BCF001F5E70 /* API+Videos.swift in Sources */,
 				9657CF652E0B543E001F5E70 /* JSONReader.swift in Sources */,
+				9657CF762E0C126D001F5E70 /* UI+Videos.swift in Sources */,
 				9657CF402E0B0DA6001F5E70 /* SocialFeedAppApp.swift in Sources */,
+				9657CF7B2E0C1382001F5E70 /* Normalizable.swift in Sources */,
 				9657CF412E0B0DA6001F5E70 /* VideoFeedView.swift in Sources */,
 				9657CF5C2E0B1CE2001F5E70 /* VideoFeedUseCase.swift in Sources */,
 				9657CF582E0B1CCB001F5E70 /* VideoFeedViewModel.swift in Sources */,

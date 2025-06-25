@@ -18,6 +18,9 @@ struct VideoFeedView: View {
             Text("Hello, world!")
         }
         .padding()
+        .task {
+            await viewModel.fetchVideos()
+        }
     }
 }
 

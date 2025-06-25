@@ -14,6 +14,8 @@ protocol VideoFeedViewModelType {
 
 @Observable
 final class VideoFeedViewModel {
+    private(set) var videos: [UI.Feed.Video] = []
+    
     private let useCase: VideoFeedUseCaseType
     
     init(
@@ -29,7 +31,10 @@ extension VideoFeedViewModel: VideoFeedViewModelType {
     func fetchVideos() async {
         do {
             let videos = try await useCase.fetchVideos()
+            self.videos = videos.map { $0.normalize() }
+            print("Fetched \(videos.count) videos")
         } catch {
+            print("Failed to fetch videos: \(error)")
             // Handle error appropriately, e.g., show an alert or log the error
         }
     }

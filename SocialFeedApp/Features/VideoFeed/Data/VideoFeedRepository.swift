@@ -8,7 +8,7 @@
 import Foundation
 
 protocol VideoFeedRepositoryType {
-    func fetchVideos() async throws -> API.Feed.Response
+    func fetchVideos() async throws -> [Domain.Feed.Video]
 }
 
 @Observable
@@ -23,13 +23,17 @@ final class VideoFeedRepository {
 }
 
 extension VideoFeedRepository: VideoFeedRepositoryType {
-    func fetchVideos() async throws -> API.Feed.Response {
+    func fetchVideos() async throws -> [Domain.Feed.Video] {
         return try await withCheckedThrowingContinuation { continuation in
-            do {
-                let response: API.Feed.Response = try self.jsonReader.load("videos.json")
-                continuation.resume(returning: response)
-            } catch {
-                continuation.resume(throwing: error)
+            // Simulate network delay
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
+                do {
+                    let response: API.Feed.Response = try self.jsonReader.load("videos")
+                    let normalizedVideos = response.normalize()
+                    continuation.resume(returning: normalizedVideos)
+                } catch {
+                    continuation.resume(throwing: error)
+                }
             }
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol VideoFeedUseCaseType {
-    func fetchVideos() async throws -> [API.Feed.Response.Video]
+    func fetchVideos() async throws -> [Domain.Feed.Video]
 }
 
 @Observable
@@ -23,7 +23,7 @@ final class VideoFeedUseCase {
 }
 
 extension VideoFeedUseCase: VideoFeedUseCaseType {
-    func fetchVideos() async throws -> [API.Feed.Response.Video] {
-        return try await repository.fetchVideos().videos
+    func fetchVideos() async throws -> [Domain.Feed.Video] {
+        return try await repository.fetchVideos()
     }
 }
