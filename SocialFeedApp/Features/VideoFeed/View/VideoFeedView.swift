@@ -108,8 +108,21 @@ struct VideoFeedItemView: View {
                     isCurrentVideo: isCurrentVideo,
                     isScrolling: isScrolling
                 )
+                .frame(width: geometry.size.width, height: geometry.size.height)
                 .clipped()
     
+                // Gradient overlay
+                LinearGradient(
+                    colors: [
+                        Color.clear,
+                        Color.clear,
+                        Color.black.opacity(0.3),
+                        Color.black.opacity(0.7)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                
                 // Content overlay
                 VStack {
                     // Top section with creator info

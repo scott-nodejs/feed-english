@@ -24,14 +24,8 @@ struct VideoFeedPlayerView: View {
         ZStack {
             if let player = player {
                 VideoPlayer(player: player)
-                    .onAppear {
-                        player.play()
-                        isPlaying = true
-                    }
-                    .onDisappear {
-                        player.pause()
-                        isPlaying = false
-                    }
+                    .aspectRatio(contentMode: .fill)
+                    .clipped()
             } else {
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
@@ -59,6 +53,7 @@ struct VideoFeedPlayerView: View {
         guard let url = URL(string: videoURL) else { return }
         player = AVPlayer(url: url)
         player?.actionAtItemEnd = .none
+        managePlayerState()
         
         // Loop video
         NotificationCenter.default.addObserver(
@@ -67,7 +62,7 @@ struct VideoFeedPlayerView: View {
             queue: .main
         ) { _ in
             player?.seek(to: .zero)
-            player?.play()
+            managePlayerState()
         }
     }
     
