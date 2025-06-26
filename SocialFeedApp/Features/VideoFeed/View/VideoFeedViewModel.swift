@@ -10,6 +10,7 @@ import SwiftUI
 
 protocol VideoFeedViewModelType {
     func fetchVideos() async
+    func loadMoreVideos() async
 }
 
 @Observable
@@ -23,8 +24,13 @@ final class VideoFeedViewModel {
     }
     
     private(set) var viewState: ViewState = .idle
-    
     private let useCase: VideoFeedUseCaseType
+    private var totalVideos: [UI.Feed.Video] = []
+    private var canLoadMorePages: Bool {
+        return currentPageNumber < totalPages // Flag to control loading more pages
+    }
+    private var currentPageNumber = 0 // Start from page 0
+    private var totalPages = 5 // Assuming a total of 5 pages
     
     init(
         useCase: VideoFeedUseCaseType = VideoFeedUseCase()
@@ -34,8 +40,9 @@ final class VideoFeedViewModel {
 }
 
 extension VideoFeedViewModel: VideoFeedViewModelType {
-    @MainActor
     func fetchVideos() async {
+        guard canLoadMorePages else { return }
+        
         // Set the initial state to loading
         self.viewState = .loading
         
@@ -45,14 +52,22 @@ extension VideoFeedViewModel: VideoFeedViewModelType {
             
             // Normalize the videos to the UI model
             let normalizedVideos = videos.map { $0.normalize() }
-                
+            self.totalVideos += normalizedVideos
+            self.currentPageNumber += 1
+            
             // Update the view state with the fetched videos
-            self.viewState = normalizedVideos.isEmpty ? .empty : .result(videos: normalizedVideos)
+            await MainActor.run {
+                self.viewState = normalizedVideos.isEmpty ? .empty : .result(videos: self.totalVideos)
+            }
         } catch {
             // Handle error appropriately, e.g., show an alert or log the error
-            viewState = .error(error)
-            
-            print("Failed to fetch videos: \(error)")
+            await MainActor.run {
+                viewState = .error(error)
+            }
         }
+    }
+    
+    func loadMoreVideos() async {
+        await fetchVideos()
     }
 }

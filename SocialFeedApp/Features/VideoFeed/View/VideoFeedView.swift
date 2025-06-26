@@ -62,7 +62,12 @@ struct VideoFeedView: View {
                         .clipped()
                         .id(index)
                         .onAppear {
-                            // TODO: Handle loading more videos when approaching the end
+                            // Load more videos when scroll reaches at last item.
+                            if index >= videos.count - 1 {
+                                Task {
+                                    await viewModel.loadMoreVideos()
+                                }
+                            }
                         }
                     }
                 }
