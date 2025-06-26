@@ -10,6 +10,9 @@ import SwiftUI
 // MARK: - Main View
 struct VideoFeedView: View {
     @State private var viewModel = VideoFeedViewModel()
+    @State private var currentIndex = 0
+    @State private var scrollPosition: Int? = 0
+    @State private var isScrolling = false
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -47,7 +50,9 @@ struct VideoFeedView: View {
                 LazyVStack(spacing: 0) {
                     ForEach(Array(videos.enumerated()), id: \.element.id) { index, video in
                         VideoFeedItemView(
-                            video: video
+                            video: video,
+                            isCurrentVideo: index == currentIndex,
+                            isScrolling: isScrolling
                         )
                         .frame(
                             width: geometry.size.width,
@@ -63,6 +68,25 @@ struct VideoFeedView: View {
                 .scrollTargetLayout()
             }
             .scrollTargetBehavior(.paging)
+            .scrollPosition(id: $scrollPosition)
+            .onChange(of: scrollPosition) { _, newValue in
+                if let newValue = newValue {
+                    currentIndex = newValue
+                }
+            }
+            .simultaneousGesture(
+                DragGesture()
+                    .onChanged { _ in
+                        if !isScrolling {
+                            isScrolling = true
+                        }
+                    }
+                    .onEnded { _ in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            isScrolling = false
+                        }
+                    }
+            )
             .ignoresSafeArea(.all)
             .background(Color.black)
         }
@@ -72,13 +96,17 @@ struct VideoFeedView: View {
 // MARK: - Video Feed Item View
 struct VideoFeedItemView: View {
     let video: UI.Feed.Video
+    let isCurrentVideo: Bool
+    let isScrolling: Bool
     
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 // Video player
                 VideoFeedPlayerView(
-                    videoURL: video.shortVideoURL
+                    videoURL: video.shortVideoURL,
+                    isCurrentVideo: isCurrentVideo,
+                    isScrolling: isScrolling
                 )
                 .clipped()
     
