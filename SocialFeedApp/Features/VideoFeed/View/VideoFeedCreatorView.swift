@@ -26,6 +26,41 @@ struct VideoFeedCreatorView: View {
             Text(creator.name)
                 .font(.headline)
                 .foregroundColor(.white)
+            
+            Spacer()
+            
+
+            Button {
+                // TODO: Handle follow action event
+            } label: {
+                HStack(spacing: 4) {
+                    Text("Follow")
+                        .font(.headline)
+                        .fontWeight(.regular)
+                        .foregroundColor(.white)
+
+                    Image(systemName: "plus")
+                        .font(.body)
+                        .foregroundColor(.white)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color.clear)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.white, lineWidth: 1)
+                )
+                .cornerRadius(20)
+            }
         }
     }
+}
+
+#Preview {
+    VideoFeedCreatorView(
+        creator: UI.Feed.Video.Creator(
+            name: "name",
+            avatarURL: "https://picsum.photos/150/150?random=1"
+        )
+    )
 }

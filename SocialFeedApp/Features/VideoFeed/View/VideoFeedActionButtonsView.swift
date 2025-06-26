@@ -9,6 +9,7 @@ import SwiftUI
 
 struct VideoFeedActionButtonsView: View {
     @State private var isLiked: Bool = false
+    @State private var isDisLiked: Bool = false
     let video: UI.Feed.Video
     
     var body: some View {
@@ -17,12 +18,29 @@ struct VideoFeedActionButtonsView: View {
                 
                 // Like button
                 Button(action: {
-                   // Action for liking the video
+                    updateLikeAStatus(isLiked: !isLiked)
                 }) {
-                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                    Image(systemName: isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .font(.title2)
-                        .foregroundColor(isLiked ? .red : .white)
+                        .foregroundColor(.white)
                         .scaleEffect(isLiked ? 1.2 : 1.0)
+                }
+                
+                Text("\(video.likes)")
+                    .font(.caption)
+                    .foregroundColor(.white)
+            }
+            
+            VStack(spacing: 4) {
+                
+                // DisLike button
+                Button(action: {
+                    updateLikeAStatus(isDisLiked: !isDisLiked)
+                }) {
+                    Image(systemName: isDisLiked ? "hand.thumbsdown.fill" : "hand.thumbsdown")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .scaleEffect(isDisLiked ? 1.2 : 1.0)
                 }
                 
                 Text("\(video.likes)")
@@ -42,6 +60,22 @@ struct VideoFeedActionButtonsView: View {
                     .font(.caption)
                     .foregroundColor(.white)
             }
+        }
+    }
+    
+    private func updateLikeAStatus(
+        isLiked: Bool = false,
+        isDisLiked: Bool = false
+    ) {
+        if isLiked {
+            self.isLiked = true
+            self.isDisLiked = false
+        } else if isDisLiked {
+            self.isDisLiked = true
+            self.isLiked = false
+        } else {
+            self.isLiked = false
+            self.isDisLiked = false
         }
     }
 }

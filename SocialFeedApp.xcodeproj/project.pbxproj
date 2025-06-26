@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		96304E892E0D8FF000775D56 /* FullScreenAVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96304E882E0D8FF000775D56 /* FullScreenAVPlayerView.swift */; };
 		96304E8A2E0D8FF000775D56 /* FullScreenAVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96304E882E0D8FF000775D56 /* FullScreenAVPlayerView.swift */; };
+		96304E8C2E0DD1AE00775D56 /* ScrollOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96304E8B2E0DD1AE00775D56 /* ScrollOffsetKey.swift */; };
+		96304E8D2E0DD1AE00775D56 /* ScrollOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96304E8B2E0DD1AE00775D56 /* ScrollOffsetKey.swift */; };
 		9657CF402E0B0DA6001F5E70 /* SocialFeedAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF3E2E0B0DA6001F5E70 /* SocialFeedAppApp.swift */; };
 		9657CF412E0B0DA6001F5E70 /* VideoFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657CF3D2E0B0DA6001F5E70 /* VideoFeedView.swift */; };
 		9657CF422E0B0DA6001F5E70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9657CF3A2E0B0DA6001F5E70 /* Preview Assets.xcassets */; };
@@ -68,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		96304E882E0D8FF000775D56 /* FullScreenAVPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenAVPlayerView.swift; sourceTree = "<group>"; };
+		96304E8B2E0DD1AE00775D56 /* ScrollOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetKey.swift; sourceTree = "<group>"; };
 		9657CF012E0B0D4C001F5E70 /* SocialFeedApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialFeedApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9657CF112E0B0D4E001F5E70 /* SocialFeedAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocialFeedAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9657CF1B2E0B0D4E001F5E70 /* SocialFeedAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocialFeedAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,6 +272,7 @@
 				9657D06E2E0C9DB0001F5E70 /* LoadingView.swift */,
 				9657D0E22E0C9E51001F5E70 /* FallbackView.swift */,
 				96304E882E0D8FF000775D56 /* FullScreenAVPlayerView.swift */,
+				96304E8B2E0DD1AE00775D56 /* ScrollOffsetKey.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -437,6 +441,7 @@
 				9657D02A2E0C501D001F5E70 /* VideoFeedActionButtonsView.swift in Sources */,
 				9657CF5B2E0B1CE2001F5E70 /* VideoFeedUseCase.swift in Sources */,
 				9657D02D2E0C5BAF001F5E70 /* VideoFeedCreatorView.swift in Sources */,
+				96304E8C2E0DD1AE00775D56 /* ScrollOffsetKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9657D0372E0C62A3001F5E70 /* VideoFeedPlayerView.swift in Sources */,
+				96304E8D2E0DD1AE00775D56 /* ScrollOffsetKey.swift in Sources */,
 				9657CF782E0C1334001F5E70 /* Domain+Videos.swift in Sources */,
 				9657CF562E0B1BCF001F5E70 /* API+Videos.swift in Sources */,
 				9657CF652E0B543E001F5E70 /* JSONReader.swift in Sources */,
@@ -622,6 +628,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -651,6 +658,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
