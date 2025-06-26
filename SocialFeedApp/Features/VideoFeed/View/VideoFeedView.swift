@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - Main View
 struct VideoFeedView: View {
     @State private var viewModel = VideoFeedViewModel()
+    @State private var scrollLastOffset: CGFloat = 0
     @State private var currentIndex = 0
     @State private var scrollPosition: Int? = 0
     @State private var isScrolling = false
@@ -74,8 +75,14 @@ struct VideoFeedView: View {
                     currentIndex = newValue
                 }
             }
-            .onScrollPhaseChange { oldPhase, newPhase in
-                isScrolling = newPhase.isScrolling
+            .onPreferenceChange(ScrollOffsetKey.self) { value in
+                if value != scrollLastOffset {
+                    isScrolling = true
+                } else {
+                    isScrolling = false
+                }
+                
+                scrollLastOffset = value
             }
             .ignoresSafeArea(.all)
             .background(Color.black)
@@ -104,7 +111,7 @@ struct VideoFeedItemView: View {
                 // Gradient overlay
                 LinearGradient(
                     colors: [
-                        Color.clear,
+                        Color.black.opacity(0.3),
                         Color.clear,
                         Color.black.opacity(0.3),
                         Color.black.opacity(0.7)
@@ -139,7 +146,7 @@ struct VideoFeedItemView: View {
                         VideoFeedActionButtonsView(video: video)
                     }
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 100)
+                    .padding(.bottom, 60)
                 }
             }
         }
