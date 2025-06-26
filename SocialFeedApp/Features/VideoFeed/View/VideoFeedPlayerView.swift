@@ -16,6 +16,9 @@ struct VideoFeedPlayerView: View {
     @State private var player: AVPlayer?
     @State private var isPlaying = false
     
+    @Environment(\.scenePhase) private var scenePhase
+    
+    // Check to play and pause video in correct order
     private var shouldPlayVideo: Bool {
         return isCurrentVideo && !isScrolling
     }
@@ -39,7 +42,7 @@ struct VideoFeedPlayerView: View {
             setupPlayer()
         }
         .onDisappear {
-            player?.pause()
+            removePlayer()
         }
         .onChange(of: isCurrentVideo) { _, newValue in
             managePlayerState()
@@ -47,12 +50,22 @@ struct VideoFeedPlayerView: View {
         .onChange(of: isScrolling) { _, newValue in
             managePlayerState()
         }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase != .active {
+                // Handle if the app is not active
+                player?.pause()
+                isPlaying = false
+            } else {
+                // Handle if the app becomes active again
+                managePlayerState()
+            }
+        }
     }
     
     private func setupPlayer() {
         guard let url = URL(string: videoURL) else { return }
         player = AVPlayer(url: url)
-        player?.actionAtItemEnd = .none
+        player?.actionAtItemEnd = .pause
         managePlayerState()
         
         // Loop video
@@ -68,7 +81,7 @@ struct VideoFeedPlayerView: View {
     
     private func managePlayerState() {
         guard let player = player else { return }
-    
+        
         if shouldPlayVideo {
             player.play()
             isPlaying = true
@@ -76,5 +89,11 @@ struct VideoFeedPlayerView: View {
             player.pause()
             isPlaying = false
         }
+    }
+    
+    private func removePlayer() {
+        player?.pause()
+        player = nil
+        isPlaying = false
     }
 }

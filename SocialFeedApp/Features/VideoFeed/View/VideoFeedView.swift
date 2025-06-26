@@ -74,19 +74,9 @@ struct VideoFeedView: View {
                     currentIndex = newValue
                 }
             }
-            .simultaneousGesture(
-                DragGesture()
-                    .onChanged { _ in
-                        if !isScrolling {
-                            isScrolling = true
-                        }
-                    }
-                    .onEnded { _ in
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            isScrolling = false
-                        }
-                    }
-            )
+            .onScrollPhaseChange { oldPhase, newPhase in
+                isScrolling = newPhase.isScrolling
+            }
             .ignoresSafeArea(.all)
             .background(Color.black)
         }
@@ -110,7 +100,7 @@ struct VideoFeedItemView: View {
                 )
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .clipped()
-    
+                
                 // Gradient overlay
                 LinearGradient(
                     colors: [
