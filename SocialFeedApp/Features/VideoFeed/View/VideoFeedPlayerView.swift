@@ -39,9 +39,11 @@ struct VideoFeedPlayerView: View {
         }
         .onAppear {
             setupPlayer()
+            addObserver()
         }
         .onDisappear {
             removePlayer()
+            removeObserver()
         }
         .onChange(of: isCurrentVideo) { _, newValue in
             managePlayerState()
@@ -66,16 +68,6 @@ struct VideoFeedPlayerView: View {
         player = AVPlayer(url: url)
         player?.actionAtItemEnd = .pause
         managePlayerState()
-        
-        // Loop video
-        NotificationCenter.default.addObserver(
-            forName: .AVPlayerItemDidPlayToEndTime,
-            object: player?.currentItem,
-            queue: .main
-        ) { _ in
-            player?.seek(to: .zero)
-            managePlayerState()
-        }
     }
     
     private func managePlayerState() {
@@ -94,5 +86,25 @@ struct VideoFeedPlayerView: View {
         player?.pause()
         player = nil
         isPlaying = false
+    }
+    
+    private func addObserver() {
+        // Loop video
+        NotificationCenter.default.addObserver(
+            forName: .AVPlayerItemDidPlayToEndTime,
+            object: player?.currentItem,
+            queue: .main
+        ) { _ in
+            player?.seek(to: .zero)
+            player?.play()
+        }
+    }
+    
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: player?.currentItem
+        )
     }
 }
