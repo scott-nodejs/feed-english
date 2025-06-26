@@ -26,9 +26,8 @@ struct VideoFeedPlayerView: View {
     var body: some View {
         ZStack {
             if let player = player {
-                VideoPlayer(player: player)
-                    .aspectRatio(contentMode: .fill)
-                    .clipped()
+                FullScreenAVPlayerView(player: player)
+                    .ignoresSafeArea(.all)
             } else {
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
