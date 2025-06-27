@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct VideoFeedActionButtonsView: View {
+    private let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
     @State private var isLiked: Bool = false
     @State private var isDisLiked: Bool = false
     let video: UI.Feed.Video
@@ -15,10 +16,11 @@ struct VideoFeedActionButtonsView: View {
     var body: some View {
         VStack(spacing: 20) {
             VStack(spacing: 4) {
-                
                 // Like button
                 Button(action: {
-                    updateLikeAStatus(isLiked: !isLiked)
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        updateLikeAStatus(isLiked: !isLiked)
+                    }
                 }) {
                     Image(systemName: isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .font(.title2)
@@ -32,10 +34,11 @@ struct VideoFeedActionButtonsView: View {
             }
             
             VStack(spacing: 4) {
-                
                 // DisLike button
                 Button(action: {
-                    updateLikeAStatus(isDisLiked: !isDisLiked)
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        updateLikeAStatus(isDisLiked: !isDisLiked)
+                    }
                 }) {
                     Image(systemName: isDisLiked ? "hand.thumbsdown.fill" : "hand.thumbsdown")
                         .font(.title2)
@@ -50,7 +53,9 @@ struct VideoFeedActionButtonsView: View {
             
             // Comment button
             VStack(spacing: 4) {
-                Button(action: {}) {
+                Button(action: {
+                    impactFeedback.impactOccurred()
+                }) {
                     Image(systemName: "message")
                         .font(.title2)
                         .foregroundColor(.white)
@@ -67,6 +72,8 @@ struct VideoFeedActionButtonsView: View {
         isLiked: Bool = false,
         isDisLiked: Bool = false
     ) {
+        impactFeedback.impactOccurred()
+       
         if isLiked {
             self.isLiked = true
             self.isDisLiked = false
