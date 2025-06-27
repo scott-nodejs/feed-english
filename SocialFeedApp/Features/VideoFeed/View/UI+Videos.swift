@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Video Model
 extension UI.Feed {
-    struct Video: Identifiable {
+    struct Video: Identifiable, Equatable {
         let id = UUID()
         let creator: Creator
         let shortVideoURL: String
@@ -17,6 +17,10 @@ extension UI.Feed {
         let description: String
         let likes: Int
         let comments: Int
+        
+        static func == (lhs: UI.Feed.Video, rhs: UI.Feed.Video) -> Bool {
+            lhs.id == rhs.id
+        }
     }
 }
 

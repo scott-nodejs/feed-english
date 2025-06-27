@@ -7,9 +7,9 @@
         "name": "Alex Johnson",
         "avatarURL": "https://picsum.photos/150/150?random=1"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-      "description": "Amazing sunset timelapse from my rooftop! 🌅 #sunset #timelapse #nature",
+      "description": "Amazing sunset timelapse from my rooftop! \ud83c\udf05 #sunset #timelapse #nature",
       "likes": 1247,
       "comments": 89
     },
@@ -20,9 +20,9 @@
         "name": "Maria Rodriguez",
         "avatarURL": "https://picsum.photos/150/150?random=2"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/bunny/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/bunny/movie_300.mp4",
-      "description": "Quick 5-minute morning workout routine! Let's get moving 💪 #fitness #workout #morning",
+      "description": "Quick 5-minute morning workout routine! Let's get moving \ud83d\udcaa #fitness #workout #morning",
       "likes": 3421,
       "comments": 156
     },
@@ -33,9 +33,9 @@
         "name": "Chef Mike Wilson",
         "avatarURL": "https://picsum.photos/150/150?random=3"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/video/movie_300.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/video/movie_300.webm",
-      "description": "Perfect homemade pasta in 20 minutes! Recipe in comments 🍝 #cooking #pasta #recipe",
+      "description": "Perfect homemade pasta in 20 minutes! Recipe in comments \ud83c\udf5d #cooking #pasta #recipe",
       "likes": 2856,
       "comments": 234
     },
@@ -46,9 +46,9 @@
         "name": "Sarah Chen",
         "avatarURL": "https://picsum.photos/150/150?random=4"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-      "description": "Hidden gem in Tokyo! This ramen shop is incredible 🍜 #tokyo #travel #ramen #foodie",
+      "description": "Hidden gem in Tokyo! This ramen shop is incredible \ud83c\udf5c #tokyo #travel #ramen #foodie",
       "likes": 4782,
       "comments": 312
     },
@@ -59,9 +59,9 @@
         "name": "Emma Thompson",
         "avatarURL": "https://picsum.photos/150/150?random=5"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/bunny/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/bunny/movie_300.mp4",
-      "description": "My golden retriever learning to skateboard! 🐕‍🦺🛹 He's getting so good! #dogs #skateboard #cute",
+      "description": "My golden retriever learning to skateboard! \ud83d\udc15\u200d\ud83e\uddba\ud83d\udef9 He's getting so good! #dogs #skateboard #cute",
       "likes": 8934,
       "comments": 567
     },
@@ -72,9 +72,9 @@
         "name": "David Kim",
         "avatarURL": "https://picsum.photos/150/150?random=6"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/video/movie_300.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/video/movie_300.webm",
-      "description": "iPhone photography tips that will blow your mind! 📱📸 #photography #iphone #tips",
+      "description": "iPhone photography tips that will blow your mind! \ud83d\udcf1\ud83d\udcf8 #photography #iphone #tips",
       "likes": 5643,
       "comments": 287
     },
@@ -85,9 +85,9 @@
         "name": "Zoe Martinez",
         "avatarURL": "https://picsum.photos/150/150?random=7"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-      "description": "New choreography to my favorite song! 💃✨ Can you learn it? #dance #choreography #trending",
+      "description": "New choreography to my favorite song! \ud83d\udc83\u2728 Can you learn it? #dance #choreography #trending",
       "likes": 12456,
       "comments": 734
     },
@@ -98,9 +98,9 @@
         "name": "Luna Green",
         "avatarURL": "https://picsum.photos/150/150?random=8"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/bunny/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/bunny/movie_300.mp4",
-      "description": "Repotting my monstera! Watch how much it's grown 🌱 #plants #monstera #plantcare #growth",
+      "description": "Repotting my monstera! Watch how much it's grown \ud83c\udf31 #plants #monstera #plantcare #growth",
       "likes": 3287,
       "comments": 198
     },
@@ -111,9 +111,9 @@
         "name": "Vincent Nakamura",
         "avatarURL": "https://picsum.photos/150/150?random=9"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/video/movie_300.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/video/movie_300.webm",
-      "description": "Oil painting process - from blank canvas to masterpiece 🎨 #art #painting #process #timelapse",
+      "description": "Oil painting process - from blank canvas to masterpiece \ud83c\udfa8 #art #painting #process #timelapse",
       "likes": 6789,
       "comments": 423
     },
@@ -124,9 +124,9 @@
         "name": "Jake Reynolds",
         "avatarURL": "https://picsum.photos/150/150?random=10"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-      "description": "When you realize it's Monday tomorrow... 😭😂 #monday #relatable #comedy #mood",
+      "description": "When you realize it's Monday tomorrow... \ud83d\ude2d\ud83d\ude02 #monday #relatable #comedy #mood",
       "likes": 15623,
       "comments": 892
     },
@@ -137,9 +137,9 @@
         "name": "Aria Santos",
         "avatarURL": "https://picsum.photos/150/150?random=11"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/bunny/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/bunny/movie_300.mp4",
-      "description": "Playing my new original song on guitar 🎸 What do you think? #music #guitar #original #acoustic",
+      "description": "Playing my new original song on guitar \ud83c\udfb8 What do you think? #music #guitar #original #acoustic",
       "likes": 4521,
       "comments": 267
     },
@@ -150,9 +150,9 @@
         "name": "Chloe Williams",
         "avatarURL": "https://picsum.photos/150/150?random=12"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/video/movie_300.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/video/movie_300.webm",
-      "description": "5 ways to style one dress! Which look is your favorite? 👗✨ #fashion #styling #outfit #dress",
+      "description": "5 ways to style one dress! Which look is your favorite? \ud83d\udc57\u2728 #fashion #styling #outfit #dress",
       "likes": 7832,
       "comments": 445
     },
@@ -163,9 +163,9 @@
         "name": "Ryan Foster",
         "avatarURL": "https://picsum.photos/150/150?random=13"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-      "description": "Hiking to this secret waterfall at sunrise 🏔️💦 The view was worth the 4am wake up! #hiking #nature #waterfall",
+      "description": "Hiking to this secret waterfall at sunrise \ud83c\udfd4\ufe0f\ud83d\udca6 The view was worth the 4am wake up! #hiking #nature #waterfall",
       "likes": 9156,
       "comments": 523
     },
@@ -176,9 +176,9 @@
         "name": "Lily Chen",
         "avatarURL": "https://picsum.photos/150/150?random=14"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/bunny/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/bunny/movie_300.mp4",
-      "description": "Book recommendations that changed my life! 📚 Swipe for the full list #books #reading #booktok #recommendations",
+      "description": "Book recommendations that changed my life! \ud83d\udcda Swipe for the full list #books #reading #booktok #recommendations",
       "likes": 3654,
       "comments": 189
     },
@@ -189,9 +189,9 @@
         "name": "Marcus Johnson",
         "avatarURL": "https://picsum.photos/150/150?random=15"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/video/movie_300.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/video/movie_300.webm",
-      "description": "Restoring my 1969 Mustang - 6 months of work in 60 seconds! 🚗⚡ #cars #restoration #mustang #before&after",
+      "description": "Restoring my 1969 Mustang - 6 months of work in 60 seconds! \ud83d\ude97\u26a1 #cars #restoration #mustang #before&after",
       "likes": 11234,
       "comments": 678
     },
@@ -202,9 +202,9 @@
         "name": "Sophie Anderson",
         "avatarURL": "https://picsum.photos/150/150?random=16"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-      "description": "Making the fluffiest pancakes you've ever seen! 🥞 Recipe is easier than you think #baking #pancakes #fluffy #breakfast",
+      "description": "Making the fluffiest pancakes you've ever seen! \ud83e\udd5e Recipe is easier than you think #baking #pancakes #fluffy #breakfast",
       "likes": 6789,
       "comments": 334
     },
@@ -215,9 +215,9 @@
         "name": "Tony Rivera",
         "avatarURL": "https://picsum.photos/150/150?random=17"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/bunny/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/bunny/movie_300.mp4",
-      "description": "Finally landed my first kickflip! 🛹 Only took me 3 months of practice 😅 #skateboard #kickflip #progress #nevergiveup",
+      "description": "Finally landed my first kickflip! \ud83d\udef9 Only took me 3 months of practice \ud83d\ude05 #skateboard #kickflip #progress #nevergiveup",
       "likes": 8567,
       "comments": 456
     },
@@ -228,9 +228,9 @@
         "name": "Mia Patel",
         "avatarURL": "https://picsum.photos/150/150?random=18"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/video/movie_300.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/video/movie_300.webm",
-      "description": "10-minute morning yoga flow for beginners 🧘‍♀️ Start your day with intention #yoga #morning #mindfulness #beginner",
+      "description": "10-minute morning yoga flow for beginners \ud83e\uddd8\u200d\u2640\ufe0f Start your day with intention #yoga #morning #mindfulness #beginner",
       "likes": 5432,
       "comments": 278
     },
@@ -241,9 +241,9 @@
         "name": "Oliver Stone",
         "avatarURL": "https://picsum.photos/150/150?random=19"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-      "description": "Mind-blowing card trick revealed! Can you figure it out? 🃏✨ #magic #cardtrick #illusion #mindblown",
+      "description": "Mind-blowing card trick revealed! Can you figure it out? \ud83c\udccf\u2728 #magic #cardtrick #illusion #mindblown",
       "likes": 13789,
       "comments": 789
     },
@@ -254,11 +254,12 @@
         "name": "Dr. Cosmos Neil",
         "avatarURL": "https://picsum.photos/150/150?random=20"
       },
-      "shortVideoURL": "https://media.w3.org/2010/05/bunny/trailer.mp4",
+      "shortVideoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
       "fullVideoURL": "https://media.w3.org/2010/05/bunny/movie_300.mp4",
-      "description": "5 mind-blowing facts about black holes! 🌌 The universe is incredible #space #blackholes #science #astronomy",
+      "description": "5 mind-blowing facts about black holes! \ud83c\udf0c The universe is incredible #space #blackholes #science #astronomy",
       "likes": 18456,
       "comments": 1023
     }
   ]
 }
+

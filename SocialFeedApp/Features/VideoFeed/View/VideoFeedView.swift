@@ -14,23 +14,24 @@ struct VideoFeedView: View {
     @State private var currentIndex = 0
     @State private var scrollPosition: Int? = 0
     @State private var isScrolling = false
+    @State private var reloadTrigger = UUID()
     
     var body: some View {
         ZStack(alignment: .center) {
             switch viewModel.viewState {
             case .idle, .loading:
                 LoadingView(message: "")
-            case .error(let error):
-                FallbackView(errorMessage: error.localizedDescription) {
-                    // TODO: Handle retry action
+            case .error(_):
+                FallbackView() {
+                    reloadTrigger = UUID()
                 }
             case .result(let videos):
                 videoFeedPlayerView(
                     videos: videos
                 )
             case .empty:
-                FallbackView {
-                    // TODO: Handle retry action
+                FallbackView(errorMessage: "No videos available") {
+                    reloadTrigger = UUID()
                 }
             }
         }
@@ -38,6 +39,9 @@ struct VideoFeedView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .task {
+            await viewModel.fetchVideos()
+        }
+        .task(id: reloadTrigger) {
             await viewModel.fetchVideos()
         }
     }

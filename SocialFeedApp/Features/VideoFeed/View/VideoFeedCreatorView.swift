@@ -35,22 +35,22 @@ struct VideoFeedCreatorView: View {
             } label: {
                 HStack(spacing: 4) {
                     Text("Follow")
-                        .font(.headline)
-                        .fontWeight(.regular)
+                        .font(.caption)
+                        .fontWeight(.semibold)
                         .foregroundColor(.white)
 
                     Image(systemName: "plus")
-                        .font(.body)
+                        .font(.caption)
                         .foregroundColor(.white)
                 }
                 .padding(.horizontal, 12)
-                .padding(.vertical, 8)
+                .padding(.vertical, 5)
                 .background(Color.clear)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: 22)
                         .stroke(Color.white, lineWidth: 1)
                 )
-                .cornerRadius(20)
+                .cornerRadius(22)
             }
         }
     }
