@@ -1,5 +1,5 @@
 //
-//  SocialFeedAppTests.swift
+//  VideoFeedViewModelTests.swift
 //  SocialFeedAppTests
 //
 //  Created by Usman on 24.06.25.
@@ -9,7 +9,7 @@ import Testing
 @testable import SocialFeedApp
 
 @Suite("Tests for VideoFeedViewModel")
-struct SocialFeedAppTests {
+struct VideoFeedViewModelTests {
 
     @Test("Test 1: fetch videos with success")
     func testFetchFeedVideos_withSuccess_expectVideosList() async throws {
@@ -36,7 +36,7 @@ struct SocialFeedAppTests {
         }
     }
     
-    @Test("Test 1: fetch videos with empty list")
+    @Test("Test 2: fetch videos with empty list")
     func testFetchFeedVideos_withSuccess_expectEmptyList() async throws {
         // Given
         let mockResponse: API.Feed.Response = .init(videos: [])
@@ -57,7 +57,7 @@ struct SocialFeedAppTests {
         }
     }
     
-    @Test("Test 1: fetch videos with error")
+    @Test("Test 3: fetch videos with error")
     func testFetchFeedVideos_withFailure_expectError() async throws {
         // Given
         let mockError: Error = MockError.invalidData
