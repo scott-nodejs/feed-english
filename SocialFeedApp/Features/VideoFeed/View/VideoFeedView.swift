@@ -42,7 +42,7 @@ struct VideoFeedView: View {
             await viewModel.fetchVideos()
         }
         .task(id: reloadTrigger) {
-            await viewModel.fetchVideos()
+            await viewModel.loadMoreVideos(video: nil)
         }
     }
     
@@ -59,20 +59,18 @@ struct VideoFeedView: View {
                             isCurrentVideo: index == currentIndex,
                             isScrolling: isScrolling
                         )
+                        .onAppear {
+                            // Load more videos when scroll reaches at last item.
+                            Task {
+                                await viewModel.loadMoreVideos(video: video)
+                            }
+                        }
                         .frame(
                             width: geometry.size.width,
                             height: geometry.size.height
                         )
                         .clipped()
                         .id(index)
-                        .onAppear {
-                            // Load more videos when scroll reaches at last item.
-                            if index >= videos.count - 1 {
-                                Task {
-                                    await viewModel.loadMoreVideos()
-                                }
-                            }
-                        }
                     }
                 }
                 .scrollTargetLayout()

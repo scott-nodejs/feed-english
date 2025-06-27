@@ -10,7 +10,7 @@ import SwiftUI
 
 protocol VideoFeedViewModelType {
     func fetchVideos() async
-    func loadMoreVideos() async
+    func loadMoreVideos(video: UI.Feed.Video?) async
 }
 
 @Observable
@@ -43,24 +43,26 @@ final class VideoFeedViewModel {
     private(set) var viewState: ViewState = .idle
     private let useCase: VideoFeedUseCaseType
     private var totalVideos: [UI.Feed.Video] = []
-    private var canLoadMorePages: Bool {
-        return currentPageNumber < totalPages && viewState != .loading // Flag to control loading more pages
-    }
-    private var currentPageNumber = 0 // Start from page 0
-    private var totalPages = 5 // Assuming a total of 5 pages
+    private var canLoadMoreVideos: Bool = false
+    private var offset = 0 // Start from page 0
+    private var limit = 20 //
     
     init(
         useCase: VideoFeedUseCaseType = VideoFeedUseCase()
     ) {
         self.useCase = useCase
     }
+    
+    private func reset() {
+        totalVideos.removeAll()
+        offset = 0
+        canLoadMoreVideos = true
+    }
 }
 
 extension VideoFeedViewModel: VideoFeedViewModelType {
     @MainActor
     func fetchVideos() async {
-        guard canLoadMorePages else { return }
-        
         // Set the initial state to loading
         self.viewState = .loading
         
@@ -68,20 +70,44 @@ extension VideoFeedViewModel: VideoFeedViewModelType {
             // Fetch videos using the use case
             let videos = try await useCase.fetchVideos()
             
-            // Normalize the videos to the UI model
-            let normalizedVideos = videos.map { $0.normalize() }
-            self.totalVideos += normalizedVideos
-            self.currentPageNumber += 1
-            
-            // Update the view state with the fetched videos
-            self.viewState = normalizedVideos.isEmpty ? .empty : .result(videos: self.totalVideos)
+            if videos.isEmpty {
+                canLoadMoreVideos = false
+                
+                if self.totalVideos.isEmpty {
+                    // If no videos are available, set the view state to empty
+                    self.viewState = .empty
+                } else {
+                    // If there are already videos loaded, just update the view state to show results
+                    self.viewState = .result(videos: self.totalVideos)
+                }
+                    
+            } else {
+                // Normalize the videos to the UI model
+                let normalizedVideos = videos.map { $0.normalize() }
+                self.totalVideos += normalizedVideos
+                self.offset += normalizedVideos.count
+                
+                // Update the view state with the fetched videos
+                self.viewState = .result(videos: self.totalVideos)
+            }
         } catch {
             // Handle error appropriately, e.g., show an alert or log the error
             viewState = .error(error)
         }
     }
     
-    func loadMoreVideos() async {
-        await fetchVideos()
+    func loadMoreVideos(video: UI.Feed.Video?) async {
+        guard let video else {
+            reset() // Reset if the video is nil, which means we want to start fresh
+            await fetchVideos()
+            return
+        }
+        
+        guard canLoadMoreVideos && viewState != .loading else { return }
+        
+        let thresholdIndex = totalVideos.index(totalVideos.endIndex, offsetBy: -1)
+        if totalVideos.firstIndex(where: { $0.id == video.id }) == thresholdIndex {
+            await fetchVideos()
+        }
     }
 }
