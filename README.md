@@ -1,6 +1,6 @@
 # SocialFeedApp
 
-**SocialFeedApp** is a lightweight iOS application built as part of a coding assessment. It showcases a vertically scrollable video feed similar to TikTok or Instagram Reels, where each video is full-screen and autoplayed when visible.
+**SocialFeedApp** is a lightweight iOS application. It showcases a vertically scrollable video feed similar to TikTok or Instagram Reels, where each video is full-screen and autoplayed when visible.
 
 ---
 
