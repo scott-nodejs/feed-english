@@ -4,7 +4,7 @@
 
 ---
 
-## ✅ Assessment Requirements
+## ✅ Requirements
 
 The app implements the following functionality as outlined in the task:
 
