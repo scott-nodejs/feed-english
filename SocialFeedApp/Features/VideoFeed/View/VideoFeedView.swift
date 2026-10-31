@@ -38,9 +38,7 @@ struct VideoFeedView: View {
         .ignoresSafeArea(.all)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
-        .task {
-            await viewModel.fetchVideos()
-        }
+        .onChange(of: SocialAPI.shared.revision) { _, _ in reloadTrigger = UUID() }
         .task(id: reloadTrigger) {
             await viewModel.loadMoreVideos(video: nil)
         }
@@ -102,19 +100,30 @@ struct VideoFeedItemView: View {
     let video: UI.Feed.Video
     let isCurrentVideo: Bool
     let isScrolling: Bool
+    @State private var showsChallenge = false
     
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 // Video player
-                VideoFeedPlayerView(
-                    videoURL: video.shortVideoURL,
-                    isCurrentVideo: isCurrentVideo,
-                    isScrolling: isScrolling
-                )
-                .frame(width: geometry.size.width, height: geometry.size.height)
-                .clipped()
-                
+                ZStack {
+                    if video.scene?.preview == true {
+                        let scale = max(geometry.size.width / 280, geometry.size.height / 230)
+                        Image("ChallengeReference").resizable().frame(width: 1199 * scale, height: 1312 * scale)
+                            .offset(x: -313 * scale - (280 * scale - geometry.size.width) / 2,
+                                    y: -772 * scale - (230 * scale - geometry.size.height) / 2)
+                            .frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
+                            .clipped().allowsHitTesting(false)
+                    } else {
+                        AsyncImage(url: URL(string: SocialAPI.mediaURL(video.scene?.coverUrl))) { image in image.resizable().scaledToFill() }
+                        placeholder: { Color.black }
+                        .allowsHitTesting(false)
+                        if !video.shortVideoURL.isEmpty {
+                            VideoFeedPlayerView(videoURL: video.shortVideoURL, isCurrentVideo: isCurrentVideo && !showsChallenge, isScrolling: isScrolling)
+                        }
+                    }
+                }.frame(width: geometry.size.width, height: geometry.size.height).clipped()
+
                 // Gradient overlay
                 LinearGradient(
                     colors: [
@@ -136,9 +145,9 @@ struct VideoFeedItemView: View {
                     }
                     .padding(.horizontal, 16)
                     .padding(.top, 60)
-                    
+
                     Spacer()
-                    
+
                     // Bottom section with description and actions
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading, spacing: 8) {
@@ -147,6 +156,16 @@ struct VideoFeedItemView: View {
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.leading)
                                 .lineLimit(3)
+                            Button {
+                                showsChallenge = true
+                            } label: {
+                                Label("挑战这个场景", systemImage: "mic")
+                                    .font(.subheadline.weight(.semibold))
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 10)
+                                    .overlay(Capsule().stroke(.white, lineWidth: 1))
+                            }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         
@@ -158,6 +177,9 @@ struct VideoFeedItemView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .fullScreenCover(isPresented: $showsChallenge) {
+            ChallengeFlowView(video: video)
+        }
     }
 }
 

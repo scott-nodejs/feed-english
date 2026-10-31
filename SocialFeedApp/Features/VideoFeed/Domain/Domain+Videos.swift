@@ -17,6 +17,7 @@ extension Domain.Feed {
         let description: String
         let likes: Int
         let comments: Int
+        var scene: SceneFeed? = nil
     }
 }
 

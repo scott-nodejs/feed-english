@@ -9,6 +9,7 @@ import SwiftUI
 
 struct VideoFeedCreatorView: View {
     let creator: UI.Feed.Video.Creator
+    var foregroundColor: Color = .white
     
     var body: some View {
         HStack(spacing: 12) {
@@ -25,7 +26,7 @@ struct VideoFeedCreatorView: View {
             
             Text(creator.name)
                 .font(.headline)
-                .foregroundColor(.white)
+                .foregroundColor(foregroundColor)
             
             Spacer()
             
@@ -37,18 +38,18 @@ struct VideoFeedCreatorView: View {
                     Text("Follow")
                         .font(.caption)
                         .fontWeight(.semibold)
-                        .foregroundColor(.white)
+                        .foregroundColor(foregroundColor)
 
                     Image(systemName: "plus")
                         .font(.caption)
-                        .foregroundColor(.white)
+                        .foregroundColor(foregroundColor)
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 5)
                 .background(Color.clear)
                 .overlay(
                     RoundedRectangle(cornerRadius: 22)
-                        .stroke(Color.white, lineWidth: 1)
+                        .stroke(foregroundColor, lineWidth: 1)
                 )
                 .cornerRadius(22)
             }

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A20000000000000000000031 /* ChallengeFlowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000030 /* ChallengeFlowModel.swift */; };
+		A20000000000000000000032 /* ChallengeFlowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000030 /* ChallengeFlowModel.swift */; };
+		A20000000000000000000021 /* SocialAppViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000020 /* SocialAppViews.swift */; };
+		A20000000000000000000022 /* SocialAppViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000020 /* SocialAppViews.swift */; };
+		A20000000000000000000011 /* SocialAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* SocialAPI.swift */; };
+		A20000000000000000000012 /* SocialAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* SocialAPI.swift */; };
+		A10000000000000000000003 /* ChallengeFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* ChallengeFlowView.swift */; };
+		A10000000000000000000001 /* ChallengeFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* ChallengeFlowView.swift */; };
 		96304E892E0D8FF000775D56 /* FullScreenAVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96304E882E0D8FF000775D56 /* FullScreenAVPlayerView.swift */; };
 		96304E8A2E0D8FF000775D56 /* FullScreenAVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96304E882E0D8FF000775D56 /* FullScreenAVPlayerView.swift */; };
 		96304E8C2E0DD1AE00775D56 /* ScrollOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96304E8B2E0DD1AE00775D56 /* ScrollOffsetKey.swift */; };
@@ -70,6 +78,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A20000000000000000000030 /* ChallengeFlowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFlowModel.swift; sourceTree = "<group>"; };
+		A20000000000000000000020 /* SocialAppViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAppViews.swift; sourceTree = "<group>"; };
+		A20000000000000000000010 /* SocialAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAPI.swift; sourceTree = "<group>"; };
+		A10000000000000000000002 /* ChallengeFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFlowView.swift; sourceTree = "<group>"; };
 		96304E882E0D8FF000775D56 /* FullScreenAVPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenAVPlayerView.swift; sourceTree = "<group>"; };
 		96304E8B2E0DD1AE00775D56 /* ScrollOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetKey.swift; sourceTree = "<group>"; };
 		9657CF012E0B0D4C001F5E70 /* SocialFeedApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialFeedApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,6 +229,9 @@
 				9657CF742E0C126D001F5E70 /* UI+Videos.swift */,
 				9657CF572E0B1CCB001F5E70 /* VideoFeedViewModel.swift */,
 				9657CF3D2E0B0DA6001F5E70 /* VideoFeedView.swift */,
+				A10000000000000000000002 /* ChallengeFlowView.swift */,
+				A20000000000000000000030 /* ChallengeFlowModel.swift */,
+				A20000000000000000000020 /* SocialAppViews.swift */,
 				9657D0292E0C501D001F5E70 /* VideoFeedActionButtonsView.swift */,
 				9657D02C2E0C5BAE001F5E70 /* VideoFeedCreatorView.swift */,
 				9657D0362E0C62A3001F5E70 /* VideoFeedPlayerView.swift */,
@@ -237,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				9657CF542E0B1BCF001F5E70 /* API+Videos.swift */,
+				A20000000000000000000010 /* SocialAPI.swift */,
 				9657CF5D2E0B1CF0001F5E70 /* VideoFeedRepository.swift */,
 			);
 			path = Data;
@@ -441,6 +457,10 @@
 				9657D0702E0C9DB0001F5E70 /* LoadingView.swift in Sources */,
 				9657CF592E0B1CCB001F5E70 /* VideoFeedViewModel.swift in Sources */,
 				9657CF472E0B0DA6001F5E70 /* VideoFeedView.swift in Sources */,
+				A10000000000000000000003 /* ChallengeFlowView.swift in Sources */,
+				A20000000000000000000031 /* ChallengeFlowModel.swift in Sources */,
+				A20000000000000000000021 /* SocialAppViews.swift in Sources */,
+				A20000000000000000000011 /* SocialAPI.swift in Sources */,
 				9657CF752E0C126D001F5E70 /* UI+Videos.swift in Sources */,
 				9657D02A2E0C501D001F5E70 /* VideoFeedActionButtonsView.swift in Sources */,
 				9657CF5B2E0B1CE2001F5E70 /* VideoFeedUseCase.swift in Sources */,
@@ -464,6 +484,10 @@
 				9657CF7B2E0C1382001F5E70 /* Normalizable.swift in Sources */,
 				96304E892E0D8FF000775D56 /* FullScreenAVPlayerView.swift in Sources */,
 				9657CF412E0B0DA6001F5E70 /* VideoFeedView.swift in Sources */,
+				A10000000000000000000001 /* ChallengeFlowView.swift in Sources */,
+				A20000000000000000000032 /* ChallengeFlowModel.swift in Sources */,
+				A20000000000000000000022 /* SocialAppViews.swift in Sources */,
+				A20000000000000000000012 /* SocialAPI.swift in Sources */,
 				9657D0E42E0C9E51001F5E70 /* FallbackView.swift in Sources */,
 				9657CF5C2E0B1CE2001F5E70 /* VideoFeedUseCase.swift in Sources */,
 				9657D02E2E0C5BAF001F5E70 /* VideoFeedCreatorView.swift in Sources */,
@@ -619,6 +643,7 @@
 		9657CF262E0B0D4E001F5E70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ONECODE_USE_LOCAL_PREVIEW = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -627,6 +652,8 @@
 				DEVELOPMENT_TEAM = QM2ZXR6S6G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SocialFeedApp/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "用于情景口语练习和PK录音，提交后获取语音评分。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -649,6 +676,7 @@
 		9657CF272E0B0D4E001F5E70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ONECODE_USE_LOCAL_PREVIEW = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -657,6 +685,8 @@
 				DEVELOPMENT_TEAM = QM2ZXR6S6G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SocialFeedApp/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "用于情景口语练习和PK录音，提交后获取语音评分。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

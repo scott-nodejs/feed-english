@@ -64,7 +64,7 @@ extension VideoFeedViewModel: VideoFeedViewModelType {
     @MainActor
     func fetchVideos() async {
         // Set the initial state to loading
-        self.viewState = .loading
+        if totalVideos.isEmpty { self.viewState = .loading }
         
         do {
             // Fetch videos using the use case
@@ -99,6 +99,7 @@ extension VideoFeedViewModel: VideoFeedViewModelType {
     func loadMoreVideos(video: UI.Feed.Video?) async {
         guard let video else {
             reset() // Reset if the video is nil, which means we want to start fresh
+            await useCase.resetPagination()
             await fetchVideos()
             return
         }

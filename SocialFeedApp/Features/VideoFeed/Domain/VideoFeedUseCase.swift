@@ -9,6 +9,11 @@ import Foundation
 
 protocol VideoFeedUseCaseType {
     func fetchVideos() async throws -> [Domain.Feed.Video]
+    func resetPagination() async
+}
+
+extension VideoFeedUseCaseType {
+    func resetPagination() async { }
 }
 
 @Observable
@@ -23,6 +28,8 @@ final class VideoFeedUseCase {
 }
 
 extension VideoFeedUseCase: VideoFeedUseCaseType {
+    func resetPagination() async { await repository.resetPagination() }
+
     func fetchVideos() async throws -> [Domain.Feed.Video] {
         return try await repository.fetchVideos()
     }

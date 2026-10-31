@@ -17,6 +17,7 @@ extension UI.Feed {
         let description: String
         let likes: Int
         let comments: Int
+        var scene: SceneFeed? = nil
         
         static func == (lhs: UI.Feed.Video, rhs: UI.Feed.Video) -> Bool {
             lhs.id == rhs.id
@@ -42,7 +43,8 @@ extension Domain.Feed.Video: Normalizable {
             fullVideoURL: fullVideoURL,
             description: description,
             likes: likes,
-            comments: comments
+            comments: comments,
+            scene: scene
         )
     }
 }
