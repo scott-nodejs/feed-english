@@ -75,6 +75,12 @@ Run unit tests by selecting the `SocialFeedAppTests` scheme and pressing `Cmd + 
 
 ## 本地后端接入
 
-应用沿用原有首页和布局，只将原数据层替换为 oneCode 接口。默认地址为 `http://127.0.0.1:9080/oneCode`，原有点赞／挑战操作需要登录时弹出手机号密码表单，表单中可配置地址；没有新增首页导航或账号入口。
+应用沿用原有首页和布局，只将原数据层替换为 oneCode 接口。默认接口地址为 `https://yima.hazer.top`（不带 `/oneCode`）；本地调试可改为 `http://127.0.0.1:9080/oneCode`，原有点赞／挑战操作需要登录时弹出手机号密码表单，登录表单仅用于登录，不展示服务器配置；没有新增首页导航或账号入口。
 
-完整的数据库迁移、启动方式、媒体发布、接口和验收说明见相邻仓库的 `../oneCode/SOCIAL_APP_LOCAL.md`。当前 Debug 默认启用显式本地预览，不依赖后端；联调时设置 `ONECODE_USE_LOCAL_PREVIEW=NO`，再准备原有业务数据库和 Redis。真实接口模式失败时不回退到演示数据。模拟器可直连电脑回环地址，真机需使用电脑局域网地址；开发 HTTP 仅允许本地网络，线上使用 HTTPS。
+完整的数据库迁移、启动方式、媒体发布、接口和验收说明见相邻仓库的 `../oneCode/SOCIAL_APP_LOCAL.md`。Debug 和 Release 默认均访问真实后端 `https://yima.hazer.top`；仅在需要离线预览时显式设置 `ONECODE_USE_LOCAL_PREVIEW=YES`。真实接口失败时不会回退到演示数据。模拟器可直连电脑回环地址，真机需使用电脑局域网地址；开发 HTTP 仅允许本地网络，线上使用 HTTPS。
+
+## 微信小程序登录与互动
+
+登录页支持微信小程序确认登录，并保留手机号登录。微信授权确认后会继续之前的练习、关注、点赞或评论操作；主页布局保持不变。关注、取消关注、点赞、不喜欢、评论分页／发表／本人删除均接服务端；点击视频区域可暂停或继续，手动暂停状态会保留。
+
+微信登录需要部署新后端、执行新 SQL，并将相邻仓库 `../oneCode/wechat-miniapp-integration/` 的确认页接入和发布到实际小程序。完整步骤见 `../oneCode/WECHAT_APP_LOGIN.md`，模拟器无法代替微信真机授权验证。

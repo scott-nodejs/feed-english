@@ -46,7 +46,9 @@ struct ChallengeFlowView: View {
         }
         .onChange(of: scenePhase) { _, phase in if phase != .active { model.stopPlayback(); if model.recording { model.finishRecording() } } }
         .onDisappear { model.stopPlayback(); model.discardAudio() }
-        .sheet(isPresented: $model.login, onDismiss: { Task { await model.load() } }) { SocialSettingsView() }
+        .sheet(isPresented: $model.login, onDismiss: { Task { await model.resumeAfterLogin() } }) {
+            SocialLoginView(reason: "登录后可保存练习记录、查看学习报告和参与 PK。")
+        }
         .sheet(isPresented: $showComments) { if let scene { SceneCommentsView(scene: scene) } }
         .alert("操作未完成", isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) { Button("知道了") { model.error = nil } } message: { Text(model.error ?? "") }
         .confirmationDialog("退出当前挑战？", isPresented: $showExit, titleVisibility: .visible) {

@@ -13,13 +13,15 @@ struct FullScreenAVPlayerView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> AVPlayerViewController {
         let controller = AVPlayerViewController()
+        controller.view.backgroundColor = .black
+        controller.showsPlaybackControls = false
         controller.player = player
-        controller.videoGravity = .resizeAspectFill
+        controller.videoGravity = .resizeAspect
         return controller
     }
 
     func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
         uiViewController.player = player
-        uiViewController.videoGravity = .resizeAspectFill
+        uiViewController.videoGravity = .resizeAspect
     }
 }

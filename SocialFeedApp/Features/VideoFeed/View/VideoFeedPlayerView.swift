@@ -1,110 +1,81 @@
-//
-//  VideoFeedPlayerView.swift
-//  SocialFeedApp
-//
-//  Created by Usman on 25.06.25.
-//
-
 import SwiftUI
 import AVKit
 
-// MARK: - Video Player View
+struct VideoPlaybackIntent {
+    var isCurrent = false
+    var isScrolling = false
+    var isForeground = true
+    var userPaused = false
+    var shouldPlay: Bool { isCurrent && !isScrolling && isForeground && !userPaused }
+    mutating func toggle() { userPaused.toggle() }
+}
+
+@MainActor @Observable
+final class FeedVideoPlayback {
+    let player = AVPlayer()
+    private(set) var intent = VideoPlaybackIntent()
+    private var observer: NSObjectProtocol?
+    private var url: String?
+    func configure(_ url: String) {
+        guard self.url != url, let mediaURL = URL(string: url), !url.isEmpty else { return }
+        removeObserver()
+        self.url = url
+        let item = AVPlayerItem(url: mediaURL)
+        player.replaceCurrentItem(with: item)
+        player.actionAtItemEnd = .pause
+        observer = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: item, queue: .main) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                guard let self, self.player.currentItem === item else { return }
+                self.player.seek(to: .zero) { [weak self] finished in
+                    Task { @MainActor [weak self] in
+                        guard finished, let self, self.player.currentItem === item else { return }
+                        self.apply()
+                    }
+                }
+            }
+        }
+        apply()
+    }
+    func update(current: Bool, scrolling: Bool, foreground: Bool) {
+        intent.isCurrent = current; intent.isScrolling = scrolling; intent.isForeground = foreground
+        apply()
+    }
+    func toggle() { intent.toggle(); apply() }
+    private func apply() { if intent.shouldPlay { player.play() } else { player.pause() } }
+    func stop() {
+        intent.isCurrent = false
+        player.pause(); removeObserver(); player.replaceCurrentItem(with: nil); url = nil
+    }
+    private func removeObserver() { if let observer { NotificationCenter.default.removeObserver(observer); self.observer = nil } }
+}
+
 struct VideoFeedPlayerView: View {
     let videoURL: String
     let isCurrentVideo: Bool
     let isScrolling: Bool
-    @State private var player: AVPlayer?
-    @State private var isPlaying = false
-    
+    @State private var playback = FeedVideoPlayback()
     @Environment(\.scenePhase) private var scenePhase
-    
-    // Check to play and pause video in correct order
-    private var shouldPlayVideo: Bool {
-        return isCurrentVideo && !isScrolling
-    }
-    
     var body: some View {
         ZStack {
-            if let player = player {
-                FullScreenAVPlayerView(player: player)
-                    .ignoresSafeArea(.all)
-            } else {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.3))
-                    .overlay(
-                        ProgressView()
-                            .tint(.white)
-                    )
-            }
+            FullScreenAVPlayerView(player: playback.player)
+            Button { playback.toggle() } label: {
+                ZStack {
+                    Color.clear
+                    if playback.intent.userPaused {
+                        Image(systemName: "play.fill").font(.system(size: 44)).foregroundStyle(.white.opacity(0.9))
+                            .padding(24).background(.black.opacity(0.25), in: Circle())
+                    }
+                }.contentShape(Rectangle())
+            }.buttonStyle(.plain)
+                .accessibilityLabel(playback.intent.userPaused ? "继续播放" : "暂停视频")
+                .disabled(!isCurrentVideo)
         }
-        .onAppear {
-            setupPlayer()
-            addObserver()
-        }
-        .onDisappear {
-            removePlayer()
-            removeObserver()
-        }
-        .onChange(of: isCurrentVideo) { _, newValue in
-            managePlayerState()
-        }
-        .onChange(of: isScrolling) { _, newValue in
-            managePlayerState()
-        }
-        .onChange(of: scenePhase) { _, newPhase in
-            if newPhase != .active {
-                // Handle if the app is not active
-                player?.pause()
-                isPlaying = false
-            } else {
-                // Handle if the app becomes active again
-                managePlayerState()
-            }
-        }
+        .onAppear { playback.configure(videoURL); update() }
+        .onDisappear { playback.stop() }
+        .onChange(of: videoURL) { _, value in playback.configure(value); update() }
+        .onChange(of: isCurrentVideo) { _, _ in update() }
+        .onChange(of: isScrolling) { _, _ in update() }
+        .onChange(of: scenePhase) { _, _ in update() }
     }
-    
-    private func setupPlayer() {
-        guard let url = URL(string: videoURL) else { return }
-        player = AVPlayer(url: url)
-        player?.actionAtItemEnd = .pause
-        managePlayerState()
-    }
-    
-    private func managePlayerState() {
-        guard let player = player else { return }
-        
-        if shouldPlayVideo {
-            player.play()
-            isPlaying = true
-        } else {
-            player.pause()
-            isPlaying = false
-        }
-    }
-    
-    private func removePlayer() {
-        player?.pause()
-        player = nil
-        isPlaying = false
-    }
-    
-    private func addObserver() {
-        // Loop video
-        NotificationCenter.default.addObserver(
-            forName: .AVPlayerItemDidPlayToEndTime,
-            object: player?.currentItem,
-            queue: .main
-        ) { _ in
-            player?.seek(to: .zero)
-            player?.play()
-        }
-    }
-    
-    private func removeObserver() {
-        NotificationCenter.default.removeObserver(
-            self,
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: player?.currentItem
-        )
-    }
+    private func update() { playback.update(current: isCurrentVideo, scrolling: isScrolling, foreground: scenePhase == .active) }
 }

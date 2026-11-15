@@ -21,6 +21,7 @@ struct SceneFeed: Decodable, Identifiable {
     var dislikes: Int? = nil
     var disliked: Bool? = nil
     var preview: Bool? = nil
+    var followed: Bool? = nil
 
     var video: UI.Feed.Video {
         .init(creator: .init(name: creatorName, avatarURL: SocialAPI.mediaURL(creatorAvatar)),
@@ -108,7 +109,22 @@ struct PkRoom: Decodable, Identifiable {
     var terminal: Bool { [2, 3, 4, 5, 6].contains(status) }
 }
 
+struct FollowResponse: Decodable { let uid: Int; let followed: Bool; let followers: Int }
 struct LikeResponse: Decodable { let liked: Bool; let likes: Int; let disliked: Bool?; let dislikes: Int? }
+struct WechatLoginSession: Decodable {
+    let sessionId: String
+    let verifier: String
+    let confirmationCode: String
+    let expiresAt: Int64
+    let qrImageBase64: String
+    let miniProgramUrl: String?
+}
+struct WechatLoginStatus: Decodable {
+    let status: String
+    let confirmationCode: String
+    let expiresAt: Int64
+    let nickname: String?
+}
 private struct APIEnvelope<Value: Decodable>: Decodable { let code: Int; let msg: String?; let data: Value? }
 private struct EmptyPayload: Decodable { }
 private struct LoginPayload: Decodable { let token: String }
@@ -155,19 +171,26 @@ final class SocialAPI {
     private let session: URLSession
     private let persists: Bool
     var isLoggedIn: Bool { token != nil }
+    static let defaultURL = "https://yima.hazer.top"
     static let localURL = "http://127.0.0.1:9080/oneCode"
 
     init(baseURL: String? = nil, session: URLSession = .shared, token: String? = nil) {
-        self.baseURL = baseURL ?? UserDefaults.standard.string(forKey: "social-base-url") ?? Self.localURL
+        let savedURL = UserDefaults.standard.string(forKey: "social-base-url")
+        let migrateLocalDefault = baseURL == nil && (savedURL == nil || savedURL == Self.localURL)
+        self.baseURL = baseURL ?? (migrateLocalDefault ? Self.defaultURL : savedURL ?? Self.defaultURL)
         self.session = session
         self.persists = baseURL == nil
-        self.token = token ?? (baseURL == nil ? LoginKeychain.read() : nil)
+        self.token = token ?? (baseURL == nil && !migrateLocalDefault ? LoginKeychain.read() : nil)
+        if migrateLocalDefault {
+            LoginKeychain.save(nil)
+            UserDefaults.standard.set(Self.defaultURL, forKey: "social-base-url")
+        }
     }
     func configure(_ address: String) throws {
         let value = address.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: CharacterSet(charactersIn: "/"))
         guard let url = URLComponents(string: value), ["http", "https"].contains(url.scheme), url.host != nil,
               url.user == nil, url.password == nil, url.query == nil, url.fragment == nil else {
-            throw SocialError.message("请输入完整后端地址，例如 \(Self.localURL)")
+            throw SocialError.message("请输入完整后端地址，例如 \(Self.defaultURL)")
         }
         if baseURL != value {
             logout(); baseURL = value
@@ -176,22 +199,46 @@ final class SocialAPI {
         }
     }
     func login(phone: String, password: String) async throws {
-        let result: LoginPayload = try await request("lazyer/mobile/login", method: "POST", body: ["phone": phone, "password": password])
-        token = result.token
-        if persists { LoginKeychain.save(result.token) }
+        let result: LoginPayload = try await request("lazyer/mobile/login", method: "POST", body: ["phone": phone, "password": password], authenticated: false)
+        try await adopt(result.token)
+    }
+    private func adopt(_ value: String) async throws {
+        guard !value.isEmpty else { throw SocialError.message("登录凭证无效") }
+        token = value
+        if persists { LoginKeychain.save(value) }
         do { person = try await request("lazyer/mobile/social/me") }
         catch { logout(); throw error }
         revision += 1
     }
+    func createWechatLogin() async throws -> WechatLoginSession {
+        try await request("lazyer/mobile/wechat-login/sessions", method: "POST", authenticated: false)
+    }
+    private func wechatPath(_ session: WechatLoginSession, action: String) throws -> String {
+        guard session.sessionId.range(of: "^al_[A-Za-z0-9_-]{22}$", options: .regularExpression) != nil else {
+            throw SocialError.message("微信登录请求无效，请刷新")
+        }
+        return "lazyer/mobile/wechat-login/sessions/\(session.sessionId)/\(action)"
+    }
+    func wechatStatus(_ session: WechatLoginSession) async throws -> WechatLoginStatus {
+        try await request(wechatPath(session, action: "status"), method: "POST", body: ["verifier": session.verifier], authenticated: false)
+    }
+    func completeWechatLogin(_ session: WechatLoginSession) async throws {
+        let result: LoginPayload = try await request(wechatPath(session, action: "exchange"), method: "POST", body: ["verifier": session.verifier], authenticated: false)
+        try await adopt(result.token)
+    }
+    func cancelWechatLogin(_ session: WechatLoginSession) async {
+        guard let path = try? wechatPath(session, action: "cancel") else { return }
+        let _: EmptyPayload? = try? await response(path, method: "POST", body: ["verifier": session.verifier], authenticated: false)
+    }
     func restore() async throws { if isLoggedIn { person = try await request("lazyer/mobile/social/me") } }
     func logout() { token = nil; person = nil; if persists { LoginKeychain.save(nil) }; revision += 1 }
 
-    private func response<Value: Decodable>(_ path: String, method: String, body: [String: Any]?, multipart: Data? = nil, contentType: String? = nil) async throws -> Value? {
+    private func response<Value: Decodable>(_ path: String, method: String, body: [String: Any]?, multipart: Data? = nil, contentType: String? = nil, authenticated: Bool = true) async throws -> Value? {
         guard let base = URL(string: baseURL + "/"), let url = URL(string: path, relativeTo: base)?.absoluteURL else { throw SocialError.message("后端地址无效") }
         var request = URLRequest(url: url)
         request.httpMethod = method
-        request.timeoutInterval = multipart == nil ? 30 : 120
-        if let token { request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
+        request.timeoutInterval = multipart == nil ? (path == "lazyer/mobile/wechat-login/sessions" ? 60 : 30) : 120
+        if authenticated, let token { request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
         if let body {
             request.httpBody = try JSONSerialization.data(withJSONObject: body)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -199,15 +246,16 @@ final class SocialAPI {
         if let multipart { request.httpBody = multipart; request.setValue(contentType, forHTTPHeaderField: "Content-Type") }
         let (data, rawResponse) = try await session.data(for: request)
         guard let http = rawResponse as? HTTPURLResponse else { throw SocialError.message("后端响应无效") }
-        if http.statusCode == 401 { logout(); throw SocialError.message("登录已过期，请重新登录") }
+        if http.statusCode == 404 && path.hasPrefix("lazyer/mobile/wechat-login/") { throw SocialError.message("微信登录服务尚未部署，请先更新后端") }
+        if http.statusCode == 401 { if authenticated { logout() }; throw SocialError.message("登录已过期，请重新登录") }
         guard (200..<300).contains(http.statusCode) else { throw SocialError.message("请求失败（\(http.statusCode)）") }
         let envelope = try JSONDecoder().decode(APIEnvelope<Value>.self, from: data)
-        if envelope.code == 401 { logout() }
+        if envelope.code == 401 && authenticated { logout() }
         guard envelope.code == 200 else { throw SocialError.message(envelope.msg ?? "请求失败") }
         return envelope.data
     }
-    func request<Value: Decodable>(_ path: String, method: String = "GET", body: [String: Any]? = nil) async throws -> Value {
-        guard let value: Value = try await response(path, method: method, body: body) else { throw SocialError.message("服务器未返回数据") }
+    func request<Value: Decodable>(_ path: String, method: String = "GET", body: [String: Any]? = nil, authenticated: Bool = true) async throws -> Value {
+        guard let value: Value = try await response(path, method: method, body: body, authenticated: authenticated) else { throw SocialError.message("服务器未返回数据") }
         return value
     }
     func empty(_ path: String, method: String = "POST") async throws {

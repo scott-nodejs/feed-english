@@ -38,7 +38,16 @@ struct VideoFeedView: View {
         .ignoresSafeArea(.all)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
-        .onChange(of: SocialAPI.shared.revision) { _, _ in reloadTrigger = UUID() }
+        .onChange(of: SocialAPI.shared.revision) { _, _ in
+            // Refresh interaction state without removing the item that presents the login/challenge sheet.
+            if case .result(let videos) = viewModel.viewState, videos.indices.contains(currentIndex),
+               let scene = videos[currentIndex].scene, scene.preview != true {
+                Task { await SocialFeedStore.shared.refresh(scene.id) }
+            }
+        }
+        .task {
+            if SocialAPI.shared.isLoggedIn && SocialAPI.shared.person == nil { try? await SocialAPI.shared.restore() }
+        }
         .task(id: reloadTrigger) {
             await viewModel.loadMoreVideos(video: nil)
         }
@@ -101,6 +110,7 @@ struct VideoFeedItemView: View {
     let isCurrentVideo: Bool
     let isScrolling: Bool
     @State private var showsChallenge = false
+    @State private var interaction = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -115,11 +125,14 @@ struct VideoFeedItemView: View {
                             .frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
                             .clipped().allowsHitTesting(false)
                     } else {
-                        AsyncImage(url: URL(string: SocialAPI.mediaURL(video.scene?.coverUrl))) { image in image.resizable().scaledToFill() }
-                        placeholder: { Color.black }
+                        Color.black
+                        AsyncImage(url: URL(string: SocialAPI.mediaURL(video.scene?.coverUrl))) { image in
+                            image.resizable().scaledToFit()
+                        } placeholder: { Color.black }
+                        .frame(width: geometry.size.width, height: geometry.size.height)
                         .allowsHitTesting(false)
                         if !video.shortVideoURL.isEmpty {
-                            VideoFeedPlayerView(videoURL: video.shortVideoURL, isCurrentVideo: isCurrentVideo && !showsChallenge, isScrolling: isScrolling)
+                            VideoFeedPlayerView(videoURL: video.shortVideoURL, isCurrentVideo: isCurrentVideo && !showsChallenge && !interaction, isScrolling: isScrolling)
                         }
                     }
                 }.frame(width: geometry.size.width, height: geometry.size.height).clipped()
@@ -134,13 +147,13 @@ struct VideoFeedItemView: View {
                     ],
                     startPoint: .top,
                     endPoint: .bottom
-                )
+                ).allowsHitTesting(false)
                 
                 // Content overlay
                 VStack {
                     // Top section with creator info
                     HStack {
-                        VideoFeedCreatorView(creator: video.creator)
+                        VideoFeedCreatorView(creator: video.creator, scene: video.scene, interaction: $interaction)
                         Spacer()
                     }
                     .padding(.horizontal, 16)
@@ -169,7 +182,7 @@ struct VideoFeedItemView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        VideoFeedActionButtonsView(video: video)
+                        VideoFeedActionButtonsView(video: video, interaction: $interaction)
                     }
                     .padding(.horizontal, 16)
                     .padding(.bottom, 60)

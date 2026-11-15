@@ -3,8 +3,10 @@ import AVFoundation
 
 @MainActor @Observable
 final class ChallengeFlowModel {
-    enum Step { case detail, modes, friends, waiting, practice, result, report }
+    enum Step: Equatable { case detail, modes, friends, waiting, practice, result, report }
     let scene: SceneFeed?
+    private let api: SocialAPI
+    private var pendingMode: String?
     var step: Step = .detail
     var mode = "单人练习"
     var lines: [DialogueLine] = []
@@ -27,8 +29,8 @@ final class ChallengeFlowModel {
     var previewTurn = 0
     var previewAnswerVisible = false
     var isPreview: Bool { SocialAPI.usesLocalPreview && scene?.preview == true }
-    var myAvatar: String? { isPreview ? "preview://我" : SocialAPI.shared.person?.avatar }
-    var uid: Int? { isPreview ? 101 : SocialAPI.shared.person?.uid }
+    var myAvatar: String? { isPreview ? "preview://我" : api.person?.avatar }
+    var uid: Int? { isPreview ? 101 : api.person?.uid }
     var isHost: Bool { room?.inviterUid == uid }
     var isMyTurn: Bool { isPreview || room == nil || (room?.status == 1 && room?.currentUid == uid) }
     var currentLine: DialogueLine? {
@@ -55,7 +57,8 @@ final class ChallengeFlowModel {
         if room.winnerUid == 0 { return "势均力敌！" }
         return room.winnerUid == uid ? "你赢了！" : "继续加油！"
     }
-    init(scene: SceneFeed?, room: PkRoom? = nil) {
+    init(scene: SceneFeed?, room: PkRoom? = nil, api: SocialAPI? = nil) {
+        self.api = api ?? SocialAPI.shared
         self.scene = scene; self.room = room
         if let room { mode = "好友 PK"; step = room.status == 2 ? .result : room.status == 1 ? .practice : .waiting; lines = (room.lines ?? []).map(\.line) }
     }
@@ -63,8 +66,8 @@ final class ChallengeFlowModel {
         if isPreview { lines = LocalDialoguePreview.lines; return }
         guard let scene else { error = "该内容未关联后端情景"; return }
         await run {
-            if SocialAPI.shared.isLoggedIn { try await SocialAPI.shared.restore() }
-            self.lines = try await SocialAPI.shared.request("lazyer/mobile/social/feed/\(scene.id)/lines")
+            if api.isLoggedIn { try await api.restore() }
+            self.lines = try await api.request("lazyer/mobile/social/feed/\(scene.id)/lines")
         }
     }
     func run(_ operation: () async throws -> Void) async {
@@ -75,7 +78,7 @@ final class ChallengeFlowModel {
     }
     func requireLogin() -> Bool {
         if isPreview { return true }
-        if !SocialAPI.shared.isLoggedIn { login = true; return false }; return true
+        if !api.isLoggedIn { login = true; return false }; return true
     }
     func selectMode(_ mode: String) async {
         if isPreview {
@@ -85,29 +88,37 @@ final class ChallengeFlowModel {
             else { room = LocalDialoguePreview.room(friend: nil, status: 7); step = .waiting }
             return
         }
-        guard requireLogin(), let scene else { return }
+        guard let scene else { return }
+        guard requireLogin() else { pendingMode = mode; return }
+        pendingMode = nil
         self.mode = mode
         await run {
-            try await SocialAPI.shared.restore()
+            try await api.restore()
             switch mode {
             case "单人练习":
                 self.room = nil
-                self.practice = try await SocialAPI.shared.request("lazyer/mobile/social/feed/\(scene.id)/practice", method: "POST")
+                self.practice = try await api.request("lazyer/mobile/social/feed/\(scene.id)/practice", method: "POST")
                 self.lines = self.practice?.lines ?? []; self.step = .practice
             case "好友 PK":
-                self.friends = try await SocialAPI.shared.request("lazyer/mobile/social/friends")
+                self.friends = try await api.request("lazyer/mobile/social/friends")
                 self.selectedFriend = self.friends.first?.uid; self.step = .friends
             default:
-                let result: PkRoom = try await SocialAPI.shared.request("lazyer/mobile/social/feed/\(scene.id)/random-rooms", method: "POST")
+                let result: PkRoom = try await api.request("lazyer/mobile/social/feed/\(scene.id)/random-rooms", method: "POST")
                 self.apply(result); self.step = result.status == 1 ? .practice : .waiting
             }
         }
+    }
+    func resumeAfterLogin() async {
+        let selectedMode = pendingMode
+        pendingMode = nil
+        guard api.isLoggedIn, let selectedMode else { return }
+        await selectMode(selectedMode)
     }
     func invite() async {
         if isPreview { room = LocalDialoguePreview.room(friend: friends.first { $0.uid == selectedFriend }, status: 7); step = .waiting; return }
         guard let selectedFriend, let scene else { return }
         await run {
-            let room: PkRoom = try await SocialAPI.shared.request("lazyer/mobile/social/feed/\(scene.id)/rooms", method: "POST", body: ["friendUid": selectedFriend])
+            let room: PkRoom = try await api.request("lazyer/mobile/social/feed/\(scene.id)/rooms", method: "POST", body: ["friendUid": selectedFriend])
             self.apply(room); self.step = .waiting
         }
     }
@@ -115,7 +126,7 @@ final class ChallengeFlowModel {
         if isPreview { room = LocalDialoguePreview.room(friend: friends.first { $0.uid == selectedFriend }, status: 1); step = .practice; return }
         guard let room else { return }
         await run {
-            let updated: PkRoom = try await SocialAPI.shared.request("lazyer/mobile/social/rooms/\(room.id)/start", method: "POST")
+            let updated: PkRoom = try await api.request("lazyer/mobile/social/rooms/\(room.id)/start", method: "POST")
             self.apply(updated)
         }
     }
@@ -123,7 +134,7 @@ final class ChallengeFlowModel {
         if isPreview { return }
         guard let room, !busy, !recording, !room.terminal else { return }
         do {
-            let updated: PkRoom = try await SocialAPI.shared.request("lazyer/mobile/social/rooms/\(room.id)")
+            let updated: PkRoom = try await api.request("lazyer/mobile/social/rooms/\(room.id)")
             apply(updated)
             if mode == "随机匹配", updated.status == 7, isHost { await startRoom() }
         } catch { self.error = error.localizedDescription }
@@ -175,10 +186,10 @@ final class ChallengeFlowModel {
         guard let audio = pendingAudio, let line = recordingLine, !recording else { return }
         await run {
             if let room = self.room {
-                let updated: PkRoom = try await SocialAPI.shared.upload("lazyer/mobile/social/rooms/\(room.id)/voices", line: line, requestId: self.requestId, url: audio, duration: self.duration)
+                let updated: PkRoom = try await api.upload("lazyer/mobile/social/rooms/\(room.id)/voices", line: line, requestId: self.requestId, url: audio, duration: self.duration)
                 self.apply(updated)
             } else if let practice = self.practice {
-                let updated: PracticeSession = try await SocialAPI.shared.upload("lazyer/mobile/social/practice/\(practice.id)/voices", line: line, requestId: self.requestId, url: audio, duration: self.duration)
+                let updated: PracticeSession = try await api.upload("lazyer/mobile/social/practice/\(practice.id)/voices", line: line, requestId: self.requestId, url: audio, duration: self.duration)
                 self.practice = updated; self.lines = updated.lines
                 if updated.finished { self.step = .result }
             }
@@ -196,7 +207,7 @@ final class ChallengeFlowModel {
         stopPlayback(); discardAudio()
         if isPreview { room = nil; return true }
         guard let room, !room.terminal else { return true }
-        do { let _: PkRoom = try await SocialAPI.shared.request("lazyer/mobile/social/rooms/\(room.id)/leave", method: "POST"); self.room = nil; return true }
+        do { let _: PkRoom = try await api.request("lazyer/mobile/social/rooms/\(room.id)/leave", method: "POST"); self.room = nil; return true }
         catch { self.error = error.localizedDescription; return false }
     }
     func replay() async {
